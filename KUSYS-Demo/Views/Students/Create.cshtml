@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model StudentModel
+<div class="bg-white p-2 rounded shadow ">
+
+
+    <h4><strong>Create a new student</strong></h4>
+    <br />
+
+
+    <form asp-controller="Students" asp-action="Create" method="post">
+       
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="FirstName" class="form-label">First Name<span class="text-danger">*</span></label>
+                <input type="text" required asp-for="FirstName" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+            </div>
+            <div class="col-md-6">
+                <label asp-for="LastName" class="form-label">Last Name<span class="text-danger">*</span></label>
+                <input type="text" required asp-for="LastName" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mt-1">
+                <label asp-for="Email" class="form-label">Email<span class="text-danger">*</span></label>
+                <input type="email" required asp-for="Email" class="form-control" placeholder="example@gmail.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mt-1">
+                <label asp-for="BirthDate" class="form-label">Date of Birth<span class="text-danger">*</span></label>
+                <input type="date" required name="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+              <div class="col-md-6 mt-1">
+                <label asp-for="StudentNo" class="form-label">Student No<span class="text-danger">*</span></label>
+                <input type="number" required asp-for="StudentNo" class="form-control" placeholder="Student No" />
+                <span asp-validation-for="StudentNo" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div align="center">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+
+
+</div>
+

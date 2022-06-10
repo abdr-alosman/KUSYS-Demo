@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<Student>
+
+
+<link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel=" stylesheet" />
+
+<div class="bg-white p-2 rounded shadow ">
+
+    <div class="row">
+        <div class="col-md-6 pb-1">
+            <h4><strong>Students List</strong></h4>
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-6 pb-1">
+                <a href="/Students/Create" class="btn btn-primary float-end"><i class="fas fa-plus"></i> &nbsp; New Student </a>
+            </div>
+        }
+    </div>
+
+
+    @if (TempData["message"] != null)
+    {
+        <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
+    }
+    <div class="table-responsive">
+        <table id="example" class="table display nowrap caption-top table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="th-sm">Student Name</th>
+                    <th class="th-sm">Student Birthday</th>
+                    <th class="th-sm">Status</th>
+                    <th class="th-sm">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int Count = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    Count++;
+                    <tr>
+                        <td>@item.FirstName @item.LastName</td>
+                        <td>@item.BirthDate.ToShortDateString()</td>
+                        <td>@(item.Status==true?"Active":"Passive")</td>
+                        <td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a href="/Students/Edit/@item.Id" class="px-1 text-success"><i class="fas fa-edit"></i></a>
+
+                                <a class="text-danger px-1" data-bs-toggle="modal" data-bs-target="#delete_@Count"><i class="fas fa-trash"></i></a>
+                                <!--Student Delete confirmation Modal-->
+                                <div class="modal fade" id="delete_@Count" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger">
+                                                <h5 class="modal-title text-white" id="exampleModalLabel"> Student Details</h5>
+
+                                                <a class="fa fa-times" onclick="hidModal()" data-bs-dismiss="modal" aria-label="Close"></a>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to delete <b>@item.NameSurname</b>  student?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                <a href="/Students/Delete/@item.Id" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Student Delete confirmation Modal-->
+                            }
+
+
+                            <a class="text-primary px-1" data-bs-toggle="modal" data-bs-target="#detaylar_@Count"><i class="fas fa-eye"></i></a>
+                            <!--Student Details Modal-->
+                             <div class="modal fade" id="detaylar_@Count" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-dark">
+                                            <h5 class="modal-title text-white" id="exampleModalLabel"> Student Details</h5>
+
+                                            <a class="fa fa-times" onclick="hidModal()" data-bs-dismiss="modal" aria-label="Close"></a>
+
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach (var student in Model.Where(x=>x.Id==item.Id))
+                                            {
+                                                <p>Name Surname: @student.NameSurname</p>
+                                                <p>Birthday: @item.BirthDate.ToShortDateString()</p>
+                                                <p>Email: @item.Email</p>
+                                                <p>Student No: @item.StudentNo</p>
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Student Details Modal-->
+                    </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- MDBootstrap Datatables  -->
+@section Scripts
+{
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+        $('#example').DataTable();
+
+    });
+</script>
+}
+

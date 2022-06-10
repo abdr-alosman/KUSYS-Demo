@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewData["Title"] = "RoleEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model RoleDetails
+
+<link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel=" stylesheet" />
+
+<div class="bg-white p-2 shadow rounded">
+    <h2>Edit Role: </h2>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="RoleEdit" asp-controller="Admin">
+                <input type="hidden" name="RoleId" value="@Model.Role.Id" />
+                <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+
+                <h6 class="bg-primary text-white p-1">Add to @Model.Role.Name</h6>
+                <table id="example" class="table example table-bordered bg-light">
+                    <thead>
+                        <tr>
+                            <th>Name Surname</th>
+                            
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.NonMembers.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    Bütün Kullanıcılar Role Ait Değil
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var user in Model.NonMembers)
+                            {
+                                <tr class="bg-light">
+                                    <td>@user.NameSurname</td>
+                                    
+                                    <td>@user.UserName</td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="IdsToAdd" value="@user.Id" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <hr />
+                <br />
+                <h6 class="bg-primary text-white p-1"> Remove From @Model.Role.Name</h6>
+                <table id="example" class="table example table-bordered bg-light ">
+                    <thead>
+                        <tr>
+                            <th>Name Surname</th>
+                          
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        @if (Model.Members.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3">
+                                    No Users of the Role
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var user in Model.Members)
+                            {
+                                <tr class="bg-light">
+                                    <td>@user.NameSurname</td>
+                                   
+                                    <td>@user.UserName</td>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="IdsToDelete" value="@user.Id" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <div align="center" class="mt-2">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+        $(document).ready(function () {
+
+        $('.example').DataTable();
+
+    });
+</script>
+
+}
+
+
+

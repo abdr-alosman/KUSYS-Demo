@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Student>
+<link href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel=" stylesheet" />
+
+<div class="bg-white p-2 rounded shadow ">
+
+    @if (TempData["message"] != null)
+    {
+        <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
+    }
+    <h4><strong>Student & Courses</strong></h4>
+
+    <hr />
+
+    <div class="table-responsive">
+        <table id="example" class="table display nowrap caption-top table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="th-sm">Student Name</th>
+                    <th class="th-sm">Courses</th>
+                    <th class="th-sm">Match Courses</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NameSurname</td>
+                        <td>
+                           @foreach (var course in item.StudentCourses)
+                           {
+                               <span>@course.Course.CourseName &ndash; </span> 
+                           }
+                        </td>
+                        <td align="center">
+                             <a href="/StudentCourses/MatchCourse/@item.Id" class="px-1 text-success"><i class="fas fa-edit"></i></a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- MDBootstrap Datatables  -->
+@section Scripts
+{
+<script src="//code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+        $('#example').DataTable();
+
+    });
+</script>
+}
+
+

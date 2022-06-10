@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewData["Title"] = "UserEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model UserDetailsModel
+
+
+<div class=" bg-white p-2 rounded shadow">
+    <h2>User Düzenle : </h2>
+    <div class="col-md-12">
+
+        <form asp-action="UserEdit" asp-controller="Admin" method="post">
+            <input type="hidden" name="UserId" value="@Model.UserId" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row mb-1">
+                <div class="col">
+                    <label asp-for="FirstName">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" asp-for="FirstName" placeholder="Ad">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="LastName">Kullanıcı Soyadı</label>
+                    <input type="text" class="form-control" asp-for="LastName" placeholder="Soyad">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col">
+                    <label asp-for="Email">Kullanıcı Email</label>
+                    <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="UserName">Kullanıcı Username</label>
+                    <input type="text" class="form-control" asp-for="UserName" placeholder="UserName">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+            <h4>Çalışan Yetkileri:</h4><br />
+            <div class="row mb-2 px-2">
+
+                @foreach (var rolename in ViewBag.Roles)
+                {
+                    <div class="col-md-3 mb-1 form-check form-switch">
+                        <input type="checkbox" class="form-check-input" name="SelectedRoles" value="@rolename" id="@rolename"
+                           @(Model.SelectedRoles.Any(i=>i==rolename)?"checked":"") />
+                        <label class="custom-control-label" for="@rolename">@rolename</label>
+                    </div>
+                }
+            </div>
+
+            <div align="center">
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

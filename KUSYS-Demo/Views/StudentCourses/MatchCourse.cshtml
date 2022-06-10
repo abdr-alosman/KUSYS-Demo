@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "MatchCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model StudentCoursesViewModel
+<div class="bg-white p-2 rounded shadow ">
+
+
+    <h4><strong>@Model.Student.NameSurname Courses </strong></h4>
+    <br />
+
+
+    <form asp-controller="StudentCourses" asp-action="MatchCourse" method="post">
+        <input type="hidden" name="studentId" value="@Model.Student.Id" />
+        <div class="row mb-3">
+           
+            @foreach (var item in Model.CourseListVM)
+            {
+                bool isExist = Model.StudentCourseListVM.Any(x => x.StudentId == Model.Student.Id && x.CourseId == item.CourseId);
+                <div class="col-md-4 mb-1">
+                    <input type="checkbox" class="form-check-input text-dark" @(isExist?"checked":"") name="CourseIds" value="@item.CourseId" />
+                    <label class="form-label">
+                        <b>@item.CourseName </b>
+
+                    </label>
+                </div>
+            }
+        </div>
+
+        <div align="center">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+
+
+</div>
+

@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model RegisterModel
+<div class="bg-white p-3 shadow rounded">
+
+    <h4><strong>Create New User</strong></h4>
+
+    <form asp-action="Register" asp-controller="Account" method="post" class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <div class="col mb-1">
+                <label asp-for="FirstName"> First Name</label>
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="First Name">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+
+            </div>
+            <div class="col mb-1">
+                <label asp-for="LastName"> Last Name</label>
+                <input type="text" class="form-control" asp-for="LastName" placeholder="Last Name">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col mb-1">
+                <label asp-for="Email">User Email</label>
+                <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group  mb-2">
+            <div class="col mb-1">
+                <label asp-for="Password"> Password</label>
+                <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div align="center">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+
+    </form>
+</div>
+
+
+
